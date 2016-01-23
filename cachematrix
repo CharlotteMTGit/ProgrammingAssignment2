@@ -1,0 +1,41 @@
+## Put comments here that give an overall description of what your
+## functions do
+
+## Write a short comment describing this function
+
+## Returns functions from the matrix and cache the time 
+## time consuming inverse calculation
+makeCacheMatrix <- function(x = matrix()) {
+  inverse<-NULL
+  ## set matrix value to NULL
+  set<-function(y){
+    x<<-y
+    inverse<<-NULL
+  }
+  ## Get the matrix values
+  get<-function()x
+  ##Set cached inverse values
+  setinv<-function(inv) inverse<<-inv
+  ##get cached values
+  getinv<-function() inverse
+  #return results from the function
+  list(set=set,get=get,setinv=setinv,getinv=getinv)
+}
+
+
+## Write a short comment describing this function
+##Find the matrix() and if not null, return the cached inverse. If null, return the inverse and the cache.
+cacheSolve <- function(x, ...) {
+  inv<-x$getinv()
+  ##if exists, return result to the caller
+  if(!is.null(inv)){
+    message("get cached data")
+    return(inv)
+  }
+  ##if doesn't exist
+  data<-x$get()
+  inv<-solve(data)
+  x$setinv(inv)
+  ##final output
+  inv
+}
